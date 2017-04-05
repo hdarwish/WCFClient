@@ -77,6 +77,7 @@
             </tr>
             <tr>
                 <td >
+                    
                     <asp:Button ID="btnGetEmp" runat="server" Text="Get Employee" OnClick="btnGetEmp_Click" />
                 </td>
                 <td >
@@ -86,6 +87,11 @@
             <tr>
                 <td colspan="2">
                     <asp:Label ID="Label5" runat="server" Text="Labelmsg" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <asp:TextBox ID="txtProgress" runat="server"></asp:TextBox>
                 </td>
             </tr>
         </table>

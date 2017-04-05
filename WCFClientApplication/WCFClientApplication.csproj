@@ -110,6 +110,9 @@
     <None Include="Service References\EmployeeService\Service2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\EmployeeService\Service3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -132,9 +135,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Service References\EmployeeService\WCFClientApplication.EmployeeService.EmployeeType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\EmployeeService\WCFClientApplication.EmployeeService.SaveEmployeeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
   </ItemGroup>

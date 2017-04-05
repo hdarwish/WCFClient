@@ -8,7 +8,8 @@ using System.Web.UI.WebControls;
 
 namespace WCFClientApplication
 {
-    public partial class WebForm1 : System.Web.UI.Page
+    [CallbackBehavior(UseSynchronizationContext = false)]
+    public partial class WebForm1 : System.Web.UI.Page, EmployeeService.IEmployeeServiceCallback
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -18,8 +19,9 @@ namespace WCFClientApplication
         {
             try
             {
+                InstanceContext instanceContext = new InstanceContext(this);
                 EmployeeService.IEmployeeService client =
-                   new EmployeeService.EmployeeServiceClient();
+                   new EmployeeService.EmployeeServiceClient(instanceContext);
                 EmployeeService.EmplpoyeeRequest empRequest = new EmployeeService.EmplpoyeeRequest("TFYTW2HKD", Convert.ToInt32(TextBox1.Text));
                 EmployeeService.EmployeeInfo employeeInfo = client.GetEmployee(empRequest);
                 if (employeeInfo.Type == EmployeeService.EmployeeType.FullTimeEmployee)
@@ -47,12 +49,14 @@ namespace WCFClientApplication
             {
                 Label5.Text = faultException.Message;
             }
+
         }
 
         protected void btnSaveEmp_Click(object sender, EventArgs e)
         {
+            InstanceContext instanceContext = new InstanceContext(this);
             EmployeeService.IEmployeeService client =
-              new EmployeeService.EmployeeServiceClient();
+              new EmployeeService.EmployeeServiceClient(instanceContext);
             EmployeeService.EmployeeInfo employeeInfo = new EmployeeService.EmployeeInfo();
             employeeInfo.Id = 1;
             employeeInfo.Name = TextBox2.Text;
@@ -114,6 +118,11 @@ namespace WCFClientApplication
                 trhrpay.Visible = true;
                 trhourworked.Visible = true;
             }
+        }
+
+        public void progress(int percentageCompleted)
+        {
+            txtProgress.Text = percentageCompleted.ToString() + " % Completed";
         }
     }
 }

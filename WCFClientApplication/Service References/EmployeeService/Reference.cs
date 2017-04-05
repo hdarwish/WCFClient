@@ -24,7 +24,7 @@ namespace WCFClientApplication.EmployeeService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="EmployeeService.IEmployeeService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="EmployeeService.IEmployeeService", CallbackContract=typeof(WCFClientApplication.EmployeeService.IEmployeeServiceCallback))]
     public interface IEmployeeService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmployeeService/GetEmployee", ReplyAction="http://tempuri.org/IEmployeeService/GetEmployeeResponse")]
@@ -34,12 +34,19 @@ namespace WCFClientApplication.EmployeeService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmployeeService/GetEmployee", ReplyAction="http://tempuri.org/IEmployeeService/GetEmployeeResponse")]
         System.Threading.Tasks.Task<WCFClientApplication.EmployeeService.EmployeeInfo> GetEmployeeAsync(WCFClientApplication.EmployeeService.EmplpoyeeRequest request);
         
-        // CODEGEN: Generating message contract since the operation SaveEmployee is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmployeeService/SaveEmployee", ReplyAction="http://tempuri.org/IEmployeeService/SaveEmployeeResponse")]
-        WCFClientApplication.EmployeeService.SaveEmployeeResponse SaveEmployee(WCFClientApplication.EmployeeService.EmployeeInfo request);
+        // CODEGEN: Generating message contract since the wrapper namespace (http://MyCompany.com/Employee) of message EmployeeInfo does not match the default value (http://tempuri.org/)
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEmployeeService/SaveEmployee")]
+        void SaveEmployee(WCFClientApplication.EmployeeService.EmployeeInfo request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmployeeService/SaveEmployee", ReplyAction="http://tempuri.org/IEmployeeService/SaveEmployeeResponse")]
-        System.Threading.Tasks.Task<WCFClientApplication.EmployeeService.SaveEmployeeResponse> SaveEmployeeAsync(WCFClientApplication.EmployeeService.EmployeeInfo request);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEmployeeService/SaveEmployee")]
+        System.Threading.Tasks.Task SaveEmployeeAsync(WCFClientApplication.EmployeeService.EmployeeInfo request);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IEmployeeServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEmployeeService/progress")]
+        void progress(int percentageCompleted);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -106,41 +113,32 @@ namespace WCFClientApplication.EmployeeService {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class SaveEmployeeResponse {
-        
-        public SaveEmployeeResponse() {
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IEmployeeServiceChannel : WCFClientApplication.EmployeeService.IEmployeeService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class EmployeeServiceClient : System.ServiceModel.ClientBase<WCFClientApplication.EmployeeService.IEmployeeService>, WCFClientApplication.EmployeeService.IEmployeeService {
+    public partial class EmployeeServiceClient : System.ServiceModel.DuplexClientBase<WCFClientApplication.EmployeeService.IEmployeeService>, WCFClientApplication.EmployeeService.IEmployeeService {
         
-        public EmployeeServiceClient() {
+        public EmployeeServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public EmployeeServiceClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
+        public EmployeeServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public EmployeeServiceClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public EmployeeServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public EmployeeServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public EmployeeServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public EmployeeServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
+        public EmployeeServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -168,8 +166,8 @@ namespace WCFClientApplication.EmployeeService {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        WCFClientApplication.EmployeeService.SaveEmployeeResponse WCFClientApplication.EmployeeService.IEmployeeService.SaveEmployee(WCFClientApplication.EmployeeService.EmployeeInfo request) {
-            return base.Channel.SaveEmployee(request);
+        void WCFClientApplication.EmployeeService.IEmployeeService.SaveEmployee(WCFClientApplication.EmployeeService.EmployeeInfo request) {
+            base.Channel.SaveEmployee(request);
         }
         
         public void SaveEmployee(int Id, string Name, string Gender, System.DateTime DOB, WCFClientApplication.EmployeeService.EmployeeType Type, int AnnualSalary, int HourlyPay, int HoursWorked) {
@@ -182,15 +180,15 @@ namespace WCFClientApplication.EmployeeService {
             inValue.AnnualSalary = AnnualSalary;
             inValue.HourlyPay = HourlyPay;
             inValue.HoursWorked = HoursWorked;
-            WCFClientApplication.EmployeeService.SaveEmployeeResponse retVal = ((WCFClientApplication.EmployeeService.IEmployeeService)(this)).SaveEmployee(inValue);
+            ((WCFClientApplication.EmployeeService.IEmployeeService)(this)).SaveEmployee(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<WCFClientApplication.EmployeeService.SaveEmployeeResponse> WCFClientApplication.EmployeeService.IEmployeeService.SaveEmployeeAsync(WCFClientApplication.EmployeeService.EmployeeInfo request) {
+        System.Threading.Tasks.Task WCFClientApplication.EmployeeService.IEmployeeService.SaveEmployeeAsync(WCFClientApplication.EmployeeService.EmployeeInfo request) {
             return base.Channel.SaveEmployeeAsync(request);
         }
         
-        public System.Threading.Tasks.Task<WCFClientApplication.EmployeeService.SaveEmployeeResponse> SaveEmployeeAsync(int Id, string Name, string Gender, System.DateTime DOB, WCFClientApplication.EmployeeService.EmployeeType Type, int AnnualSalary, int HourlyPay, int HoursWorked) {
+        public System.Threading.Tasks.Task SaveEmployeeAsync(int Id, string Name, string Gender, System.DateTime DOB, WCFClientApplication.EmployeeService.EmployeeType Type, int AnnualSalary, int HourlyPay, int HoursWorked) {
             WCFClientApplication.EmployeeService.EmployeeInfo inValue = new WCFClientApplication.EmployeeService.EmployeeInfo();
             inValue.Id = Id;
             inValue.Name = Name;
